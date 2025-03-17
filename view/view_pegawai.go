@@ -67,3 +67,64 @@ func Views() {
 		fmt.Println()
 	}
 }
+
+func Update() {
+	var id, nomer int
+	var nama, kota, notelp, email string
+	reader := bufio.NewReader(os.Stdin)
+
+	fmt.Print("Masukkan ID Pegawai yang akan diupdate: ")
+	fmt.Scan(&id)
+
+	fmt.Print("Masukkan Nama Pegawai: ")
+	nama, _ = reader.ReadString('\n')
+	nama = nama[:len(nama)-1]
+
+	fmt.Print("Masukkan Kota: ")
+	fmt.Scan(&kota)
+
+	fmt.Print("Masukkan Jalan: ")
+	jalan, _ := reader.ReadString('\n')
+	jalan = jalan[:len(jalan)-1]
+
+	fmt.Print("Masukkan nomer rumah: ")
+	fmt.Scan(&nomer)
+
+	fmt.Print("Masukkan Nomor Telepon: ")
+	fmt.Scan(&notelp)
+
+	fmt.Print("Masukkan Email: ")
+	fmt.Scan(&email)
+
+	// create new pegawai
+	pegawai := node.Pegawai{
+		ID:     id,
+		Nama:   nama,
+		Alamat: node.Address{jalan, kota, nomer},
+		NoTelp: notelp,
+		Email:  email,
+	}
+
+	// update pegawai
+	cek := model.UpdatePegawai(pegawai, id)
+	if cek {
+		fmt.Println("== Pegawai berhasil diupdate ==")
+	} else {
+		fmt.Println("Pegawai gagal diupdate")
+	}
+	fmt.Println()
+}
+
+func Delete() {
+	var id int
+	fmt.Print("Masukkan ID Pegawai yang akan dihapus: ")
+	fmt.Scan(&id)
+
+	cek := model.DeletePegawai(id)
+	if cek {
+		fmt.Println("== Pegawai berhasil dihapus ==")
+	} else {
+		fmt.Println("Pegawai gagal dihapus")
+	}
+	fmt.Println()
+}
